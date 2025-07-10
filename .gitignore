@@ -1,0 +1,3 @@
+Server/venv/
+Server/Database/*.db
+Server/App/__pycache__/
