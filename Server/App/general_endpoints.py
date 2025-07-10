@@ -1,19 +1,35 @@
 # app/general_endpoints.py
 from flask import Blueprint, jsonify, request
+from werkzeug.exceptions import BadRequest, InternalServerError
+
 from .database import fetch_all
 
 general_bp = Blueprint('general', __name__)
 
 @general_bp.route('/api/sauces', methods=['GET'])
 def get_all_sauces():
-    page = request.args['page']
-    limit = request.args['limit']
-    
-    offset = (int(page) - 1) * int(limit)
-    query = "SELECT title FROM galleries LIMIT ? OFFSET ?"
-    sauces = fetch_all(query, (limit, offset))
+    try:
+        page = int(request.args.get('page', 1))
+        limit = int(request.args.get('limit', 30))
 
-    return jsonify([dict(sauce) for sauce in sauces])
+        if page <= 0 or limit <= 0:
+            raise BadRequest("Page and limit must be positive integers.")
+
+        offset = (page - 1) * limit
+        query = "SELECT title FROM galleries LIMIT ? OFFSET ?"
+        sauces = fetch_all(query, (limit, offset))
+
+        return jsonify([dict(sauce) for sauce in sauces]), 200
+
+    except ValueError:
+        raise BadRequest("Page and limit must be integers.")
+
+    except KeyError as e:
+        raise BadRequest(f"Missing required query parameter: {str(e)}")
+
+    except Exception as e:
+        raise InternalServerError(f"An unexpected error occurred: {str(e)}")
+
 
 @general_bp.route('/api/sauces/<int:sauce_id>', methods=['GET'])
 def get_specific_sauce(sauce_id):
