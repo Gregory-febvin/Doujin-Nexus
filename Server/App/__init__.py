@@ -9,10 +9,12 @@ def create_app():
     from .browsing_section import browsing_bp
     from .language_change import language_bp
     from .search_functionality import search_bp
+    from .image_handle import image_bp
 
     app.register_blueprint(general_bp)
     app.register_blueprint(browsing_bp)
     app.register_blueprint(language_bp)
     app.register_blueprint(search_bp)
+    app.register_blueprint(image_bp)
 
     return app

@@ -1,8 +1,9 @@
 # app/general_endpoints.py
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, url_for
 from werkzeug.exceptions import BadRequest, InternalServerError
 
 from .database import fetch_all
+from .image_handle import get_image_path
 
 general_bp = Blueprint('general', __name__)
 
@@ -10,16 +11,22 @@ general_bp = Blueprint('general', __name__)
 def get_all_sauces():
     try:
         page = int(request.args.get('page', 1))
-        limit = int(request.args.get('limit', 30))
-
+        limit = int(request.args.get('limit', 10))
         if page <= 0 or limit <= 0:
             raise BadRequest("Page and limit must be positive integers.")
-
         offset = (page - 1) * limit
-        query = "SELECT title FROM galleries LIMIT ? OFFSET ?"
+
+        query = "SELECT id, title FROM galleries LIMIT ? OFFSET ?"
         sauces = fetch_all(query, (limit, offset))
 
-        return jsonify([dict(sauce) for sauce in sauces]), 200
+        result = []
+        for sauce in sauces:
+            sauce_dict = dict(sauce)
+            sauce_id = sauce_dict.get("id")
+            sauce_dict["cover"] = url_for('image.serve_image', sauce_id=sauce_id, _external=True)
+            result.append(sauce_dict)
+
+        return jsonify(result), 200
 
     except ValueError:
         raise BadRequest("Page and limit must be integers.")

@@ -1,3 +1,4 @@
 Server/venv/
 Server/Database/*.db
 Server/App/__pycache__/
+Server/Image/
