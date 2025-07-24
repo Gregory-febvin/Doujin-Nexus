@@ -1,0 +1,282 @@
+/* —— Base —— */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Noto Sans,sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    overflow-x: hidden; /* If i don't put that there some "Void" on the right side idk why but it work*/
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* —— Layout —— */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 60px;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    margin-left: 20%;
+}
+
+.header form {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-left: 1rem;
+    max-width: 30%;
+}
+
+.tabs {
+    display: flex;
+    background-color: #444;
+}
+
+.link {
+    display: flex;
+    margin-left: 20%;
+    max-width: 65%;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab:hover {
+    background-color: #555;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #0d0d0d;
+    overflow: auto;
+}
+
+/* —— Components —— */
+.img-logo {
+    max-height: 48px;
+}
+
+.search-bar {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    background-color: #34393F;
+    color: #fff;
+}
+
+.btn-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background: #DC133C;
+    cursor: pointer;
+}
+
+.img-search-button {
+    width: 20px;
+    height: 20px;
+}
+
+/* —— Gallery —— */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card {
+    width: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card img {
+    width: 208px;
+    height: 318px;
+    object-fit: cover;
+    display: block;
+}
+
+.card .title {
+    padding: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    height: 4.8em;
+    overflow: hidden;
+}
+
+/* —— Infos Sauce —— */
+#infos-container {
+  margin-bottom: 22px;
+  padding: 30px 20px;
+}
+
+.infos-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Peut être a retirer*/
+  gap: 30px;
+
+  margin: 10px auto;
+  padding: 30px 20px;
+  border-radius: 5px;
+
+  width: 100%;
+  max-width: 80%;
+
+  background-color: #1f1f1f;
+}
+
+
+/* Image Section */
+#main-cover {
+  width: 351px;
+  text-align: center;
+}
+
+.cover-image {
+  width: 350px;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Info Section */
+#main-infos {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.sauce-title .title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.sauce-id .galleries-id {
+  font-size: 16px;
+  color: #bbb;
+  cursor: pointer;
+}
+
+/* Placeholder sections */
+.sauce-parodies,
+.sauce-tags,
+.sauce-artists,
+.sauce-groups,
+.sauce-languages,
+.sauce-category,
+.sauce-pages {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.data-fields{
+    font-weight: 700;
+}
+.name{
+    background: #4d4d4d;
+}
+.count{
+    background: #333;
+}
+.tag{
+    font-size: 1em;
+    vertical-align: middle;
+    display: inline-flex;
+    margin: .13em;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.tag .count {
+	font-size: .9em;
+	color: #ccc;
+}
+
+.tag .count, .tag .name {
+	display: flex;
+	padding: .13em .39em;
+	align-items: center;
+}
+
+.tag > :first-child {
+	border-top-left-radius: .3em;
+	border-bottom-left-radius: .3em;
+}
+.tag > :last-child {
+	border-top-right-radius: .3em;
+	border-bottom-right-radius: .3em;
+}
+
+/* —— Mobile —— */
+@media (max-width: 768px) {
+  .infos-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #main-infos {
+    padding-left: 0;
+    padding-top: 20px;
+    width: 100%;
+  }
+
+  #main-cover {
+    width: 100%;
+    max-width: 351px;
+  }
+
+  .sauce-title .title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .sauce-id .galleries-id {
+    text-align: center;
+    display: block;
+  }
+}
