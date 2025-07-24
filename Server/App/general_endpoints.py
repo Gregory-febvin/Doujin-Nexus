@@ -23,7 +23,7 @@ def get_all_sauces():
         for sauce in sauces:
             sauce_dict = dict(sauce)
             sauce_id = sauce_dict.get("id")
-            sauce_dict["cover"] = url_for('image.serve_image', sauce_id=sauce_id, _external=True)
+            sauce_dict["cover"] = url_for('image.get_cover_path', sauce_id=sauce_id, _external=True)
             result.append(sauce_dict)
 
         return jsonify(result), 200
@@ -42,7 +42,9 @@ def get_specific_sauce(sauce_id):
     try:
         sauceID = int(sauce_id)
 
-        query = """
+        query_galleries_details = "SELECT * FROM galleries_details WHERE id = ?;"
+
+        query_galleries = """
             SELECT 
             g.title,
             g.pages,
@@ -83,14 +85,18 @@ def get_specific_sauce(sauce_id):
         GROUP BY 
             g.id;
         """
-        sauce = fetch_one(query, (sauceID,))
+
+        sauce = fetch_one(query_galleries_details, (sauceID,))
+        if sauce is None:
+            sauce = fetch_one(query_galleries, (sauceID,))
+            if sauce is None:
+                return jsonify({"error": "No sauce found with the given ID."}), 404
 
         if sauce is None:
             return jsonify({"error": "No sauce found with the given ID."}), 404
 
         sauce_dict = dict(sauce)
         sauce_dict["cover"] = url_for('image.get_cover_path', sauce_id=sauceID, _external=True)
-        sauce_dict["imgs_url"] = build_image_urls(sauceID)
 
         return jsonify(sauce_dict), 200
 
