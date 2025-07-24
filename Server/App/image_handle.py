@@ -35,7 +35,12 @@ def get_cover_path(sauce_id):
     """Get the cover image for a specific sauce."""
     try:
         image_path = os.path.join(IMAGE_PATH, str(sauce_id), '1.jpg')
-        return handle_image_response(image_path)
+
+        if os.path.exists(image_path):
+            return handle_image_response(image_path)
+        else: 
+            return handle_image_response(DEFAULT_IMAGE_PATH)
+            
     except Exception as e:
         return InternalServerError(f"An unexpected error occurred: {str(e)}")
 
