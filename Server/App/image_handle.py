@@ -47,7 +47,7 @@ def get_cover_path(sauce_id):
 @image_bp.route('/image/<int:sauce_id>', methods=['GET'])
 def get_all_image(sauce_id):
     """Get all image URLs for a specific sauce."""
-    pages = int(request.args.get('pages', 30))
+    pages = int(request.args.get('pages', 1))
 
     if sauce_id <= 0 or pages <= 0:
         return BadRequest("Invalid parameters.")

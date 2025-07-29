@@ -11,7 +11,7 @@ general_bp = Blueprint('general', __name__)
 def get_all_sauces():
     try:
         page = int(request.args.get('page', 1))
-        limit = int(request.args.get('limit', 10))
+        limit = int(request.args.get('limit', 25))
         if page <= 0 or limit <= 0:
             raise BadRequest("Page and limit must be positive integers.")
         offset = (page - 1) * limit
