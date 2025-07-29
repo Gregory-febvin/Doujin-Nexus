@@ -1,27 +1,16 @@
 // Infos.jsx
+import { useNavigate } from 'react-router-dom';
 
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-
-export default function Infos() {
-  const { id } = useParams();
-  const [sauce, setSauce] = useState(null);
-
-  useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/sauce/${id}`)
-      .then(res => res.json())
-      .then(data => setSauce(data))
-      .catch(err => console.error('Erreur:', err));
-  }, [id]);
+export default function Infos({sauce}) {
+  const navigate = useNavigate();
 
   if (!sauce) return <p>Chargement...</p>;
 
   return (
    <div className='infos-container'>
         <div id='main-cover'>
-            <a href={sauce.cover} rel='nofollow'>
-                <img className='cover-image' loading='lazy' src={sauce.cover} alt={sauce.title} />
-            </a>
+            <img className='cover-image' loading='lazy' src={sauce.cover} alt={sauce.title} 
+            rel='nofollow' style={{ cursor: 'pointer' }} onClick={() => navigate(`/sauce/${sauce.id}/1`)}/>
         </div>
         <div id='main-infos'>
             <div className='sauce-title data-fields'>
